@@ -4,6 +4,7 @@ class TagsController < ApplicationController
 
   before_action :set_project
   before_action :set_tag, except: [:index, :new, :create]
+  layout        'tylium'
 
   def index
     @tags = Tag.all
@@ -41,8 +42,7 @@ class TagsController < ApplicationController
       if @tag.update(tag_params)
         track_updated(@tag, project: @project)
 
-        format.html {redirect_to project_tags_path(current_project), notice: 'Tag updated'}
-        format.js
+        format.html {redirect_to project_tags_path(current_project), notice: "Tag updated"}
       else
         format.html do
           redirect_to project_tags_path(current_project),
@@ -56,7 +56,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       if @tag.destroy
         track_destroyed(@tag, project: @project)
-        format.html { redirect_to project_tags_path(current_project), notice: 'Tag deleted.' }
+        format.html { redirect_to project_tags_path(current_project), notice: "Tag deleted." }
       else
         format.html { redirect_to project_tag_path(project: current_project, id: @tag.id), notice: "Error while deleting tag: #{@tag.errors}" }
       end

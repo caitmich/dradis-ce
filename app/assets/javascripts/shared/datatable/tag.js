@@ -21,17 +21,25 @@ DradisDatatable.prototype.setupTagButtons = function() {
   
   // push 'add new tag' and 'manage tags' options onto end of tagButtons list
   tagButtons.push({
-    text: $('<hr><i href="#modal-tag-new" data-target="#modal-tag-new" data-toggle="modal" class="fa fa-plus fa-fw"></i><span>Add new tag</span>').css('color', '##2CA02C'),
+    text: $('<hr><i class="fa fa-plus fa-fw"></i><span>Add new tag</span>').css('color', '##2CA02C'),
     action: function(){
-      $("#modal-tag-new").appendTo("body").modal("show")
+      $.ajax({
+        dataType: 'script',
+        url: '/projects/1/tags/new',
+        type: 'GET',
+        success: function() {
+        },
+        error: function(xhr) {
+          $('#issue-viewer').prepend(`<div class="alert alert-danger text-error" data-behavior="error-loading">${xhr.status} error. Please try again.<button class="btn" type="button" data-dismiss="alert" aria-label="Close"><small>X</small></button></div>`);
+        }
+      });
     }.bind(this)
   }, 
   {
     text: $('<i href="/projects/1/tags" id="manageTags" class="fa fa-list fa-fw"></i><span>Manage Tags</span>').css('color', '#000000'),
     action: function(){
-      const btn = document.getElementById("manageTags")
-      link = btn.getAttribute('href');
-      window.location.href = link
+      const manageTagsLink = document.getElementById("manageTags").getAttribute('href')
+      window.location.href = manageTagsLink
     }.bind(this)
   });
 

@@ -103,6 +103,10 @@
     <% end %>
 
     <%= render 'console/console' %>
+
+    <% if controller_name == 'tags' || controller_name == 'issues' %>
+      <%= render partial: 'tags/modal' %>
+    <% end %>
     <!-- End of modals -->
 
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
